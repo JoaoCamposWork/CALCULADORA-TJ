@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TJ CALCULADORA</title>
+    <style>
+        /* Estilo simples para o layout */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image:url(assets/JOAOETAMIRES.jpg);
+        }
+
+        #container {
+            text-align: center;
+        }
+        #container h1 {
+            font-size: 3em;
+            color: rgb(59, 0, 153);
+        }
+        #container span {
+            font-size: 1em;
+            color:  rgb(59, 0, 153);
+        }
+        #container p {
+            font-size: 1.5em;
+            color: rgba(0, 174, 255, 0.979);
+        }
+        #container input {
+            width: 100%;
+            padding: 10px;
+            border: 5px solid rgba(41, 180, 169, 0.979);
+            border-radius: 15px;
+            gap: 25px;
+        }
+        #container button {
+            width: 300px;
+            gap: 50px;
+            padding: 10px;
+            border: 5px solid rgb(59, 0, 153);
+            border-radius: 15px;
+            background-color:  rgb(59, 0, 153);
+            color: white;
+        }
+    
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>CALCULADORA <span>COMPRAS</span></h1>
+        <input type="number" id="input" placeholder="Insira um valor">
+        <button onclick="adicionarValor()">Adicionar</button>
+        <p id="valores"></p>
+        <button onclick="calcularTotal()">Calcular Total</button>
+        <p id="resultado"></p>
+        <input type="number" id="desconto" placeholder="Desconto (%)">
+        <button onclick="aplicarDesconto()">Aplicar Desconto</button>
+        <p id="resultadoDesconto"></p>
+    </div>
+
+    <script>
+        let valores = [];
+        let total = 0;
+        let desconto = 0;
+
+        function adicionarValor() {
+            let input = document.getElementById("input");
+            let valor = parseFloat(input.value);
+            if (!isNaN(valor)) {
+                valores.push(valor);
+                input.value = "";
+                mostrarValores();
+            } else {
+                alert("Por favor, insira um valor numérico válido.");
+            }
+        }
+
+        function mostrarValores() {
+            let valoresText = "Valores inseridos: ";
+            for (let i = 0; i < valores.length; i++) {
+                if (i !== 0) {
+                    valoresText += ", ";
+                }
+                valoresText += valores[i];
+            }
+            document.getElementById("valores").innerText = valoresText;
+        }
+
+        function calcularTotal() {
+            total = 0;
+            for (let i = 0; i < valores.length; i++) {
+                total += valores[i];
+            }
+            document.getElementById("resultado").innerText = "Resultado total: " + total;
+        }
+
+        function aplicarDesconto() {
+            let descontoInput = document.getElementById("desconto");
+            desconto = parseFloat(descontoInput.value);
+            if (!isNaN(desconto) && desconto >= 0 && desconto <= 100) {
+                let totalComDesconto = total - (total * (desconto / 100));
+                document.getElementById("resultadoDesconto").innerText = "Resultado com desconto: " + totalComDesconto.toFixed(2);
+            } else {
+                alert("Por favor, insira um desconto válido (0-100).");
+            }
+        }
+    </script>
+</body>
+</html>
